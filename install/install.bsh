@@ -26,10 +26,10 @@ ping -c 3 ${SITE} >/dev/null 2>&1
 if [ "$?" != "0" ]
  then
   fct_echo "Connection to $SITE hangs" 
-  fct_exit 1 
+  RC=1
+  fct_exit 
  else
   fct_echo "Connection ok"
-
 fi
 }
 
@@ -83,6 +83,19 @@ fct_puppet_install()
   else
    fct_echo "Puppet already installed, nothing to do"
  fi
+}
+
+fct_configure_influxDb()
+{
+ if [ ! -f ./manifests/influxDb.pp ]
+  then
+    fct_echo "Puppet file influxDb.pp not found"
+    RC=1
+    fct_exit
+  else
+    fct_echo "Configuration of indfluxDb"
+    puppet apply -tvd ./manifests/influxDb.pp 
+ fi
 
 }
 
@@ -118,8 +131,13 @@ STEP=" STEP_1" && fct_puppet_install
 ## Step 2, puppet modules installation Grafana
 STEP=" STEP_2" && fct_module_install puppet-grafana 6.0.0
 
-## Step 2, puppet modules installation InfluxDb
+## Step 3, puppet modules installation InfluxDb
 STEP=" STEP_3" && fct_module_install golja-influxdb 4.0.0
+
+## Step 4, configuring influxDb
+STEP=" STEP_4" && fct_configure_influxDb
+
+
 
 STEP=END && fct_echo "Installation finished" && echo "" && echo ""
 fct_exit
