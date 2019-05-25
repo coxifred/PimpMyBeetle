@@ -141,8 +141,10 @@ if [ "$(id -u)" != "0" ]
 fi
 
 ## Step 0.5, checking connection
-STEP=" STEP_0.5" 
-fct_internet
+STEP=" STEP_0.5" && fct_internet
+
+## Git installation
+STEP=" STEP_0.6" && fct_git
 
 ## Step 1, puppet installation if not yet installed
 STEP=" STEP_1" && fct_puppet_install
