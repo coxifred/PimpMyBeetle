@@ -76,11 +76,7 @@ fct_puppet_install()
  if [ "$?" -ne 0 ]
   then
    fct_echo "Puppet not installed, installing with apt-get install -y puppet please wait..."
-   wget https://apt.puppetlabs.com/puppetlabs-release-pc1-stretch.deb
-   dpkg -i puppetlabs-release-pc1-stretch.deb
-   apt-get update
-   apt-get install puppet-agent
-   #apt-get install -y puppet >/dev/null 2>&1
+   apt-get install -y puppet >/dev/null 2>&1
    RC=$?
    if [ "${RC}" -ne 0 ]  
     then

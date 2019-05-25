@@ -1,3 +1,9 @@
 notify {'InfluxDb configuration':}
 
-class {'influxdb::server':}
+
+apt::source { 'influxDb':
+  location => 'https://repos.influxdata.com/debian',
+  repos    => 'strech stable',
+  release  => '9',
+}
+
