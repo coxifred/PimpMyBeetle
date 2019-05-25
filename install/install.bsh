@@ -40,6 +40,20 @@ fct_exit()
  exit ${RC}
 }
 
+## Function for installing git
+fct_git()
+{
+  fct_echo "Installing git"
+  apt-get install git
+  RC=$?
+  if [ "${RC}" -ne 0 ]  
+   then
+    RC=1
+    fct_echo "Failed to install git"
+    fct_exit
+  fi
+}
+
 ## Function for installing somes puppet modules
 fct_module_install()
 {
