@@ -109,12 +109,6 @@ fct_puppet()
   else
     fct_echo "Configuration of ${1}"
     puppet apply -tvd ./manifests/${1}.pp
-    if [  "$?" -ne 0 ]
-     then 
-        RC=1
-    fct_exit
-
-    fi
  fi
 }
 
@@ -149,8 +143,8 @@ STEP=" STEP_0.6" && fct_git
 ## Step 1, puppet installation if not yet installed
 STEP=" STEP_1" && fct_puppet_install
 
-## Step 2, puppet modules installation Grafana
-STEP=" STEP_2" && fct_module_install dwerder-grafana 1.2.2
+## Step 2, puppet modules installation apt-source
+STEP=" STEP_2" && fct_module_install puppetlabs-apt 7.0.1
 
 ## Step 3, configure git preference (vi for editor)
 STEP=" STEP_3" && fct_puppet git
