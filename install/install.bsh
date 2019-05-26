@@ -83,8 +83,7 @@ fct_puppet_install()
      fct_echo "Could'nt install puppet, try it manually => apt-get install puppet"
      fct_exit
     else
-     fct_echo "Puppet is now installed, checking ..."/opt/puppetlabs/bin
-     PATH=/opt/puppetlabs/bin:$PATH
+     fct_echo "Puppet is now installed, checking ..."
      which puppet >/dev/null 2>&1
      if [ "$?" -ne 0 ]
       then
