@@ -146,6 +146,8 @@ STEP=" STEP_1" && fct_puppet_install
 ## Step 2, puppet modules installation apt-source
 STEP=" STEP_2" && fct_module_install puppetlabs-apt 7.0.1
 
+STEP=" STEP_2.1" && fct_module_install puppetlabs-inifile 3.0.0
+
 ## Step 3, configure git preference (vi for editor)
 STEP=" STEP_3" && fct_puppet git
 
