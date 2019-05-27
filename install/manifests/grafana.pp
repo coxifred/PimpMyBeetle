@@ -133,6 +133,12 @@ exec {'grafana_ds':
       require => [Service['grafana-server.service'],Package['curl']],
      }
 
+exec {'grafana_plugin':
+      path    => "/bin:/sbin:/usr/bin:/usr/sbin",
+      command => "grafana-cli plugins install pr0ps-trackmap-panel",
+      notify  => Service['grafana-server.service'],
+     }
+
 
 
 
