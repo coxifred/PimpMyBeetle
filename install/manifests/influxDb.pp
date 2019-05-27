@@ -24,10 +24,10 @@ service {'influxdb.service':
 
 exec { "manage_influxdb_${db_name}":
       path      => '/bin:/usr/bin',
-      command   => "influx -execute 'CREATE DATABASE ${db_name}' ; influx -execute 'CREATE USER pimpMyBeetle WITH PASSWORD PimpMyBeetle WITH ALL PRIVILEGES'",
+      command   => "influx -execute 'CREATE DATABASE ${db_name}'",
       unless    => "influx -execute 'SHOW DATABASES' | grep -qs \"^${db_name}\$\"",
       onlyif    => undef,
-      tries     => 3,
+      tries     => 5,
       try_sleep => 10,
       require   => Service['influxdb.service'],
     }
