@@ -9,7 +9,7 @@ apt::source { 'grafana':
 package {'grafana':
           ensure          => present,
           install_options => ['--allow-unauthenticated'],
-          notify          => Service['grafana-server.service'],
+          notify          => [Service['grafana-server.service'],Exec['grafana_plugin']],
           require         => Apt::Source['grafana'],
 }
 
@@ -144,7 +144,7 @@ exec {'grafana_plugin':
       command => "grafana-cli plugins install pr0ps-trackmap-panel",
       tries     => 5,
       try_sleep => 10,
-      notify  => Service['grafana-server.service'],
+      refreshonly => true,
      }
 
 file {'/var/lib/grafana/dashboards':
