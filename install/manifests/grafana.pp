@@ -163,4 +163,9 @@ file {'/var/lib/grafana/dashboards/pimpMyBeetle.json':
       source  => 'file:///root/PimpMyBeetle/install/dashboards/pimpMyBeetle.json',
      }
 
+file {'/var/lib/grafana/dashboards/pimpMyBeetleSystem.json':
+      ensure  => present,
+      source  => 'file:///root/PimpMyBeetle/install/dashboards/pimpMyBeetleSystem.json',
+     }
+
 
