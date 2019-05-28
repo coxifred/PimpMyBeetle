@@ -43,25 +43,6 @@ ini_setting { 'ini_port':
   require => Package['grafana'],
 }
 
-ini_setting { 'ini_auth':
-  ensure  => present,
-  path    => '/etc/grafana/grafana.ini',
-  section => 'auth',
-  setting => 'disable_login_form',
-  value   => 'true',
-  notify  => Service['grafana-server.service'],
-  require => Package['grafana'],
-}
-
-ini_setting { 'ini_anoauth':
-  ensure  => present,
-  path    => '/etc/grafana/grafana.ini',
-  section => 'auth.anonymous',
-  setting => 'enabled',
-  value   => 'true',
-  notify  => Service['grafana-server.service'],
-  require => Package['grafana'],
-}
 
 ini_setting { 'ini_users_org':
   ensure  => present,
@@ -69,26 +50,6 @@ ini_setting { 'ini_users_org':
   section => 'users',
   setting => 'auto_assign_org_role',
   value   => 'Admin',
-  notify  => Service['grafana-server.service'],
-  require => Package['grafana'],
-}
-
-ini_setting { 'ini_users_view':
-  ensure  => present,
-  path    => '/etc/grafana/grafana.ini',
-  section => 'users',
-  setting => 'viewers_can_edit',
-  value   => 'true',
-  notify  => Service['grafana-server.service'],
-  require => Package['grafana'],
-}
-
-ini_setting { 'ini_users_editor':
-  ensure  => present,
-  path    => '/etc/grafana/grafana.ini',
-  section => 'users',
-  setting => 'editors_can_admin',
-  value   => 'true',
   notify  => Service['grafana-server.service'],
   require => Package['grafana'],
 }
@@ -136,6 +97,14 @@ exec {'grafana_ds':
       tries     => 5,
       try_sleep => 10,
       command => "curl -X POST -H \"Content-Type: application/json\" -d '{\"name\":\"pimpMyBeetle\",\"type\":\"influxdb\",\"url\":\"http://localhost:8086\",\"organization\":\"pimpMyBeetle\",\"user\":\"pimpMyBeetle\",\"password\":\"pimpMyBeetle\",\"database\":\"pimpMyBeetle\",\"isDefault\": true,\"access\":\"proxy\"}' http://admin:admin@localhost/api/datasources",
+      require => [Service['grafana-server.service'],Package['curl']],
+     }
+
+exec {'grafana_ds_telegraph':
+      path    => "/bin:/sbin:/usr/bin:/usr/sbin",
+      tries     => 5,
+      try_sleep => 10,
+      command => "curl -X POST -H \"Content-Type: application/json\" -d '{\"name\":\"telegraf\",\"type\":\"influxdb\",\"url\":\"http://localhost:8086\",\"user\":\"telegraf\",\"password\":\"metricsmetricsmetricsmetrics\",\"database\":\"telgraf\",\"access\":\"proxy\"}' http://admin:admin@localhost/api/datasources",
       require => [Service['grafana-server.service'],Package['curl']],
      }
 
