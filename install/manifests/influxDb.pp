@@ -15,10 +15,23 @@ package {'influxdb':
           require         => Apt::Source['influxDb'],
 }
 
+package {'telegraf':
+          ensure          => present,
+          install_options => ['--allow-unauthenticated'],
+          require         => Apt::Source['influxDb'],
+}
+
+
 service {'influxdb.service':
           ensure  => 'running',
           enable  => true,
           require => Package['influxdb'],
+        }
+
+service {'telegraf.service':
+          ensure  => 'running',
+          enable  => true,
+          require => Package['telegraf'],
         }
 
 
