@@ -123,7 +123,6 @@ echo ''
 
 fct_echo "Welcome to PimpMyBeetle installation ... press enter to continue" ; read NEXT
 
-
 ## Step 0, checking if we are root
 STEP=" STEP_0" ; fct_echo "Checking if you're root"
 if [ "$(id -u)" != "0" ]
@@ -134,11 +133,27 @@ if [ "$(id -u)" != "0" ]
   fct_echo "Good news, you're root, continue"
 fi
 
+## Checking current directory
+STEP=" STEP_0.2" ; fct_echo "Checking we're under /root"
+if [ $(pwd) != "/root" ]
+ then
+  fct_echo "Bad news, you're not under /root, please make a cd"
+  RC=1 && fct_exit
+ else
+  fct_echo "Good news, we are under /root"
+fi
+
 ## Step 0.5, checking connection
 STEP=" STEP_0.5" && fct_internet
 
 ## Git installation
 STEP=" STEP_0.6" && fct_git
+
+## Pull project
+STEP=" STEP_0.6" && git clone https://github.com/coxifred/PimpMyBeetle.git
+
+## Move into /root/PimpMyBeetle/install
+cd /root/PimpMyBeetle/install >/dev/null 2>&1
 
 ## Step 1, puppet installation if not yet installed
 STEP=" STEP_1" && fct_puppet_install
