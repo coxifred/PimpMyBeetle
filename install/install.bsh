@@ -44,7 +44,7 @@ fct_exit()
 fct_git()
 {
   fct_echo "Installing git"
-  apt-get install git
+  apt-get install -y git
   RC=$?
   if [ "${RC}" -ne 0 ]  
    then
