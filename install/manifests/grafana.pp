@@ -117,7 +117,8 @@ exec {'grafana_plugin':
      }
 
 file {'/var/lib/grafana/dashboards':
-      ensure => directory,
+      ensure  => directory,
+      require => Package['grafana'],
      }
 
 
