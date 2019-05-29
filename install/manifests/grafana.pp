@@ -104,7 +104,7 @@ exec {'grafana_ds_telegraph':
       path    => "/bin:/sbin:/usr/bin:/usr/sbin",
       tries     => 10,
       try_sleep => 10,
-      command => "curl -X POST -H \"Content-Type: application/json\" -d '{\"name\":\"telegraf\",\"type\":\"influxdb\",\"url\":\"http://localhost:8086\",\"user\":\"telegraf\",\"password\":\"metricsmetricsmetricsmetrics\",\"database\":\"telgraf\",\"access\":\"proxy\"}' http://admin:admin@localhost/api/datasources",
+      command => "curl -X POST -H \"Content-Type: application/json\" -d '{\"name\":\"telegraf\",\"type\":\"influxdb\",\"url\":\"http://localhost:8086\",\"user\":\"telegraf\",\"password\":\"metricsmetricsmetricsmetrics\",\"database\":\"telegraf\",\"access\":\"proxy\"}' http://admin:admin@localhost/api/datasources",
       require => [Service['grafana-server.service'],Package['curl']],
      }
 
@@ -121,6 +121,7 @@ file { '/var/lib/grafana/dashboards':
       owner   => 'grafana',
       group   => 'grafana',
       require => Package['grafana'],
+      notify  => Service['grafana-server.service'],
      }
 
 
