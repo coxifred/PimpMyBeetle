@@ -129,16 +129,21 @@ file {'/etc/grafana/provisioning/dashboards/pimpMyBeetle.yaml':
       ensure  => present,
       source  => 'file:///root/PimpMyBeetle/install/dashboards/pimpMyBeetle.yaml', 
       require => Package['grafana'],
+      notify  => Service['grafana-server.service'],
      }
 
 file {'/var/lib/grafana/dashboards/pimpMyBeetle.json':
       ensure  => present,
       source  => 'file:///root/PimpMyBeetle/install/dashboards/pimpMyBeetle.json',
+      require => File['/var/lib/grafana/dashboards'],
+      notify  => Service['grafana-server.service'],
      }
 
 file {'/var/lib/grafana/dashboards/pimpMyBeetleSystem.json':
       ensure  => present,
       source  => 'file:///root/PimpMyBeetle/install/dashboards/pimpMyBeetleSystem.json',
+      require => File['/var/lib/grafana/dashboards'],
+      notify  => Service['grafana-server.service'],
      }
 
 
