@@ -116,9 +116,10 @@ exec {'grafana_plugin':
       refreshonly => true,
      }
 
-file {'/var/lib/grafana/dashboards':
-      ensure  => directory,
-      require => Package['grafana'],
+file { ['/var/lib/grafana','/var/lib/grafana/dashboards']:
+      ensure => directory,
+      owner  => 'grafana',
+      group  => 'grafana',
      }
 
 
