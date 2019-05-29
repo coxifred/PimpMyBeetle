@@ -73,7 +73,7 @@ ini_setting { 'ini_users_org':
 service {'grafana-server.service':
           ensure  => 'running',
           enable  => true,
-          require => [Package['grafana'],Exec['setcap']],
+          require => [Package['grafana'],Exec['setcap'],File['/var/lib/grafana/dashboards']],
         }
 
 exec {'grafana_organisation':
@@ -116,10 +116,11 @@ exec {'grafana_plugin':
       refreshonly => true,
      }
 
-file { ['/var/lib/grafana','/var/lib/grafana/dashboards']:
-      ensure => directory,
-      owner  => 'grafana',
-      group  => 'grafana',
+file { '/var/lib/grafana/dashboards':
+      ensure  => directory,
+      owner   => 'grafana',
+      group   => 'grafana',
+      require => Package['grafana'],
      }
 
 
